@@ -21,15 +21,13 @@
         env-port (u/str->int (System/getenv "PORT"))
         env-node (str (System/getenv "DEFAULT_NODE"))
         conf     (or (load-conf-file home-conf) (load-conf-file pwd-conf)
-                  {
-                   :server-port 8080
-                   :users {"admin" "hello"}
-                   :default-node ""
-                  })]
-        (if env-port
-          (assoc conf :server-port env-port)
-          conf)
-        (if env-node
-          (assoc conf :default-node env-node)
-          conf)))
+                     {:server-port 8080
+                      :users {"admin" "hello"}
+                      :default-node ""})]
+    (if env-port
+      (assoc conf :server-port env-port)
+      conf)
+    (if env-node
+      (assoc conf :default-node env-node)
+      conf)))
 

@@ -6,7 +6,7 @@
 
 (defn- mk-zk-cli-inner
   "Create a zk client using addr as connecting string"
-  [ addr ]
+  [addr]
   (let [cli (-> (CuratorFrameworkFactory/builder)
                 (.connectString addr)
                 (.retryPolicy (RetryNTimes. (int 3) (int 1000)))
@@ -20,15 +20,15 @@
 (defn create
   "Create a node in zk with a client"
   ([cli path data]
-     (-> cli
-      (.create)
-      (.creatingParentsIfNeeded)
-      (.forPath path data)))
+   (-> cli
+       (.create)
+       (.creatingParentsIfNeeded)
+       (.forPath path data)))
   ([cli path]
-     (-> cli
-         (.create)
-         (.creatingParentsIfNeeded)
-         (.forPath path))))
+   (-> cli
+       (.create)
+       (.creatingParentsIfNeeded)
+       (.forPath path))))
 
 (defn rm
   "Delete a node in zk with a client"

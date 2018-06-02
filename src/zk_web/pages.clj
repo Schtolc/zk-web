@@ -62,8 +62,7 @@
         (link-to "/logout" [:span.badge.badge-error "Logout"])]
        [:div
         [:span.badge "Guest"]
-        (link-to "/login" [:span.badge.badge-success "Login"])])]]
-   ])
+        (link-to "/login" [:span.badge.badge-success "Login"])])]]])
 
 (defpartial footer []
   [:div])
@@ -79,9 +78,7 @@
         [:li [:a {:data-toggle "modal" :href "#editModal"} "Edit"]]
         [:li [:a {:data-toggle "modal" :href "#deleteModal"} "Delete"]]
         [:li [:a {:data-toggle "modal" :href "#rmrModal"} "RMR"]]]
-       (repeat [:li.divider-vertical])
-       )]]
-    ]])
+       (repeat [:li.divider-vertical]))]]]])
 
 (defpartial layout [& content]
   (html5
@@ -156,8 +153,7 @@
             [:div.modal-footer
              [:button.btn.btn-danger  "Create"]
              (space 1)
-             [:button.btn.btn-success {:data-dismiss "modal"} "Cancel"]])
-   ])
+             [:button.btn.btn-success {:data-dismiss "modal"} "Cancel"]])])
 
 (defpartial edit-modal [path data]
   [:div#editModal.modal.hide.fade
@@ -170,8 +166,7 @@
             [:div.modal-footer
              [:button.btn.btn-danger  "Save"]
              (space 1)
-             [:button.btn.btn-success {:data-dismiss "modal"} "Cancel"]
-             ])])
+             [:button.btn.btn-success {:data-dismiss "modal"} "Cancel"]])])
 
 (defpartial delete-modal [path children]
   [:div#deleteModal.modal.hide.fade
@@ -190,8 +185,7 @@
                  [:div.modal-body
                   [:div.alert.alert-error "You can't delete a node with children."]]
                  [:div.modal-footer
-                  [:button.btn.btn-success {:data-dismiss "modal"} "Cancel"]]]
-                )))])
+                  [:button.btn.btn-success {:data-dismiss "modal"} "Cancel"]]])))])
 
 (defpartial rmr-modal [path]
   [:div#rmrModal.modal.hide.fade
@@ -203,8 +197,7 @@
             [:div.modal-footer
              [:button.btn.btn-danger "I will perform RMR"]
              (space 1)
-             [:button.btn.btn-success {:data-dismiss "modal"} "Cancel"]])
-   ])
+             [:button.btn.btn-success {:data-dismiss "modal"} "Cancel"]])])
 
 ;; pages
 
@@ -222,8 +215,7 @@
         [:div.span6
          [:input.span6 {:type "text" :name "addr" :placeholder "Connect String: host[:port][/namespace]"}]]
         [:div.span2
-         [:button.btn.btn-primary {:type "submit"} "Go"]]]]]
-     )))
+         [:button.btn.btn-primary {:type "submit"} "Go"]]]]])))
 
 (defpage "/node" {:keys [path]}
   (let [path (normalize-path path)
@@ -246,8 +238,7 @@
             (edit-modal path data)
             (create-modal path)
             (delete-modal path children)
-            (rmr-modal path)
-            ])])))))
+            (rmr-modal path)])])))))
 
 (defpage [:get "/init"] {:keys [addr]}
   (init-zk-client addr)
@@ -269,11 +260,11 @@
 
 (defpage [:post "/login"] {:keys [user pass target]}
   (cond
-   (= (all-users user) pass) (do
-                               (session/put! :user user)
-                               (resp/redirect target))
-   :else (render [:get "/login"]
-                 {:msg "Incorrect password." :target target})))
+    (= (all-users user) pass) (do
+                                (session/put! :user user)
+                                (resp/redirect target))
+    :else (render [:get "/login"]
+                  {:msg "Incorrect password." :target target})))
 
 (defpage "/logout" []
   (do
