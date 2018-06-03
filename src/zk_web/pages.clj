@@ -5,7 +5,8 @@
             [noir.session :as session]
             [noir.response :as resp]
             [noir.request :as req]
-            [clojure.string :as str])
+            [clojure.string :as str]
+            [cemerick.url :refer (url url-encode)])
   (:use [noir.core]
         [zk-web.util]
         [hiccup page form element core]))
@@ -15,7 +16,7 @@
 (defn node-link
   "Return http link to node page"
   [node text]
-  [:a {:href (str "/node?path=" node)} text])
+  [:a {:href (str "/node?path=" (url-encode node))} text])
 
 (defn nodes-parents-and-link
   "Return name parents and there links"
@@ -274,7 +275,7 @@
 (defpage [:post "/edit"] {:keys [path data]}
   (when-admin
    (zk/set (session/get :cli) path (.getBytes data)))
-  (resp/redirect (str "/node?path=" path)))
+  (resp/redirect (str "/node?path=" (url-encode path))))
 
 (defpage [:post "/create"] {:keys [parent name data]}
   (let [child-path (child-path parent name)
@@ -282,14 +283,14 @@
         cli (session/get :cli)]
     (when-admin
      (zk/create cli child-path data)
-     (resp/redirect (str "/node?path=" child-path)))))
+     (resp/redirect (str "/node?path=" (url-encode child-path))))))
 
 (defpage [:post "/delete"] {:keys [path]}
   (when-admin
    (zk/rm (session/get :cli) path)
-   (resp/redirect (str "/node?path=" (parent path)))))
+   (resp/redirect (str "/node?path=" (url-encode (parent path))))))
 
 (defpage [:post "/rmr"]  {:keys [path]}
   (when-admin
    (zk/rmr (session/get :cli) path)
-   (resp/redirect (str "/node?path=" (parent path)))))
+   (resp/redirect (str "/node?path=" (url-encode (parent path))))))
