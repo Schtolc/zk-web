@@ -1,7 +1,10 @@
-(defproject zk-web "0.1.0-SNAPSHOT"
-            :description "FIXME: write this!"
-            :dependencies [[org.clojure/clojure "1.4.0"]
+(defproject zk-web "1.0"
+            :description "A web UI for zookeeper"
+            :dependencies [[org.clojure/clojure "1.8.0"]
                            [noir "1.3.0-beta3"]
-                           [com.netflix.curator/curator-framework "1.1.16"]
-                           [com.netflix.curator/curator-test "1.1.16"]]
+                           [org.apache.curator/curator-framework "4.0.1"]
+                           [org.clojure/tools.logging "0.4.1"]
+                           [org.slf4j/slf4j-log4j12 "1.7.9"]
+                           [log4j/log4j "1.2.17"]]
+            :plugins [[lein-cljfmt "0.5.7"]]
             :main zk-web.server)

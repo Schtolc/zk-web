@@ -1,6 +1,7 @@
 (ns zk-web.zk
-  (:import [com.netflix.curator.retry RetryNTimes]
-           [com.netflix.curator.framework CuratorFramework CuratorFrameworkFactory])
+  (:require [clojure.tools.logging :as log])
+  (:import [org.apache.curator.retry RetryNTimes]
+           [org.apache.curator.framework CuratorFramework CuratorFrameworkFactory])
   (:refer-clojure :exclude [set get])
   (:use zk-web.util))
 
@@ -58,7 +59,7 @@
 (defn rmr
   "Remove recursively"
   [cli path]
-  (println "rmr " path)
+  (log/info "rmr " path)
   (doseq [child (ls cli path)]
     (rmr cli (child-path path child)))
   (rm cli path))
