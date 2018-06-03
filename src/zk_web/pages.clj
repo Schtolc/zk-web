@@ -137,10 +137,11 @@
      [:span.label.label-info (count data) " byte(s)"]]]
 
    (if (nil? data)
-     [:div.alert.alert-error "God, zookeeper returns NULL!"]
+     [:div.alert.alert-error "Zookeeper returns NULL!"]
      [:div.well
       [:p {:style "word-break:break-all;"}
-       (str/replace (bytes->str data) #"\n" "<br>")]])])
+       [:pre
+        (-> data (bytes->str) (str/replace #"<" "&lt;") (str/replace #">" "&gt;"))]]])])
 
 (defpartial create-modal [path]
   [:div#createModal.modal.hide.fade
